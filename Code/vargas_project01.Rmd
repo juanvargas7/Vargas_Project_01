@@ -1,0 +1,137 @@
+---
+title: "Vargas_Project_01"
+author: "Juan Vargas"
+date: "10/9/2022"
+output: 
+  html_document:
+      toc: true
+      toc_float: true
+      toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+# Reproducible Reporting
+
+
+## Load libraries
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+library(DT)
+```
+
+
+
+## Funcitons 
+
+```{r}
+
+freezer = function(){
+  setwd('C:\\Users\\Juan\\Documents\\Vargas_Project_01\\Raw Data')
+}
+
+fridge = function(){
+  setwd('C:\\Users\\Juan\\Documents\\Vargas_Project_01\\Processed Data')
+}
+
+reports = function(){
+  setwd('C:\\Users\\Juan\\Documents\\Vargas_Project_01\\Reports')
+}
+
+```
+
+
+## Report
+
+<br>
+
+```{r}
+freezer()
+
+dt=
+  read_csv('lead-iq-01.csv')
+
+datatable(dt)
+```
+
+<br>
+
+
+```{r}
+summary(dt)
+
+
+```
+
+
+
+## Plot, Histogram
+
+```{r}
+
+dt %>%
+  ggplot() +
+    geom_histogram(aes(x = IQ, fill = Smelter), alpha = 0.7) +
+    scale_fill_manual(values = c("#69b3a2", "#404080")) +
+  ggtitle('Histogram of IQ between those living Far and Near from the Smelter') +
+  labs('Distance')
+  
+
+```
+
+Plotted is the histogram of both groups overlapped. We can see those far have a wide range compared to those neat the smelter.
+
+<br>
+
+## Summary table
+
+<br>
+
+The following table is the summary statistics of the data.
+
+<br>
+
+```{r}
+dt %>%
+  group_by(Smelter) %>%
+    summarize(
+      'N'= n(),
+      'Mean IQ' = mean(IQ),
+      'Median IQ' = median(IQ),
+      '10% IQ Quantile' = quantile(IQ, probs = 0.10),
+      '90% IQ Quantile' = quantile(IQ, probs = 0.90),
+      'Max' = max(IQ),
+      'Min' = min(IQ)
+    ) %>%
+  kableExtra::kbl()%>%
+  kable_classic_2(full_width = F)
+
+```
+
+ Theres an unusual value of 999 which could be an error.
+
+
+
+<br>
+
+
+Following a t-test will be performed to determine if theres a statistical difference of IQ between of those living far and near from the smelter. Will be using an alpha of 5%
+
+<br>
+
+## T-test
+
+```{r}
+
+t.test(IQ ~ Smelter, data = dt)
+
+```
+
+
+From the t-test we get a p-value of 0.223 failing to reject the null hypothesys, concluding the true difference between the means of IQ between both groups is equal to 0 (95%CI: -10.53844,  44.39128)
+
+
+
+
