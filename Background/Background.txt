@@ -1,0 +1,7 @@
+
+Exposure to high levels of lead may cause anemia, weakness, and kidney and brain damage. Lead can cross the placental barrier, which means pregnant women who are exposed to lead also expose their unborn child. Lead can damage a developing baby's nervous system.
+
+The data was collected by a team of researchers led by the CDC, in which investigates children from the ages of 3 and 15 in El Paso living in different distances from a lead-emitting ore smelter.
+We will be analyzing the lead dataset to determine if living near or far from the smelter affects IQ.
+
+
